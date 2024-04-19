@@ -12,5 +12,5 @@ pipeline:
   build:
     image: docker:19.03.12
     commands:
-      - sudo chmod 777 /var/run/docker.sock
+      - chmod 777 /var/run/docker.sock
       - docker build -t test:latest .
