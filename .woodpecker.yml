@@ -1,8 +1,8 @@
-clone:
-  git:
-    image: woodpecker/plugin-git
-    settings:
-      skip-verify: true
+# clone:
+#   git:
+#     image: woodpecker/plugin-git
+#     settings:
+#       skip-verify: true
 steps:
   - name: build-image
     image: docker
