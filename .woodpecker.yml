@@ -12,5 +12,5 @@ pipeline:
   build:
     image: docker:19.03.12
     commands:
-      - chmod 777 /var/run/docker.sock
+      - systemctl start docker
       - docker build -t test:latest .
