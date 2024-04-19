@@ -8,9 +8,9 @@ steps:
     image: docker
     commands:
       - docker build --rm -t local/woodpecker-test .
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-when:
-- branch: master
-  event: [push, deployment]
-- event: tag
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+# when:
+# - branch: master
+#   event: [push, deployment]
+# - event: tag
