@@ -1,20 +1,29 @@
-when:
-  - branch: master
-    event: [push, deployment]
-  - event: tag
-clone:
-  git:
-    image: woodpecker/plugin-git
-    settings:
-      skip-verify: true
-# steps:
-#   - name: build-image
-#     image: docker
-#     commands:
-#       - docker build --rm -t local/woodpecker-test .
-#     volumes:
-#       - /var/run/docker.sock:/var/run/docker.sock 
 # when:
-# - branch: master
-#   event: [push, deployment]
-# - event: tag
+#   - branch: master
+#     event: [push, deployment]
+#   - event: tag
+# clone:
+#   git:
+#     image: woodpecker/plugin-git
+#     settings:
+#       skip-verify: true
+# # steps:
+# #   - name: build-image
+# #     image: docker
+# #     commands:
+# #       - docker build --rm -t local/woodpecker-test .
+# #     volumes:
+# #       - /var/run/docker.sock:/var/run/docker.sock 
+# # when:
+# # - branch: master
+# #   event: [push, deployment]
+# # - event: tag
+steps:
+  - name: build
+    image: debian
+    commands:
+      - echo "This is the build step"
+  - name: a-test-step
+    image: debian
+    commands:
+      - echo "Testing.."
