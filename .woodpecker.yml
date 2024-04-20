@@ -27,3 +27,29 @@ steps:
     image: debian
     commands:
       - cat myfile
+
+    variables:
+  - &USERNAME some_global_secret_1
+  - &TOKEN some_global_secret_2
+
+steps:
+
+  use-as-list:
+    image: busybox
+    commands:
+      - echo $USERNAME
+      - echo $TOKEN
+    secrets:
+      - *USERNAME
+      - *TOKEN
+
+  use-as-scalar:
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      dockerfile: Dockerfile
+      registry: ${CI_FORGE_URL##https://}
+      username: ${CI_REPO_OWNER}
+      password:
+        from_secret: *TOKEN
+      repo: ${CI_FORGE_URL##https://}/${CI_REPO_OWNER}/myrepo
+      tag: "test"
