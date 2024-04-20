@@ -1,3 +1,7 @@
+when:
+  - branch: master
+    event: [push, deployment]
+  - event: tag
 clone:
   git:
     image: woodpecker/plugin-git
