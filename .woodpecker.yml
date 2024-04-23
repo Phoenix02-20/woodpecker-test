@@ -1,53 +1,33 @@
-when:
-  - branch: master
-    event: [push, deployment]
-  - event: tag
-# clone:
-#   git:
-#     image: woodpecker/plugin-git
-#     settings:
-#       skip-verify: true
-steps:
-  - name: build-image
-    image: docker
+# when:
+#   - branch: master
+#     event: [push, deployment]
+#   - event: tag
+# # clone:
+# #   git:
+# #     image: woodpecker/plugin-git
+# #     settings:
+# #       skip-verify: true
+# steps:
+#   - name: build-image
+#     image: docker
+#     commands:
+#       - docker build --rm -t local/woodpecker-test .
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock 
+
+
+platform: 'linux/amd64'
+branches: 'main'
+
+pipeline:
+ build:
+    image: 'docker:19.03.12'
     commands:
-      - docker build --rm -t local/woodpecker-test .
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock 
-
-
-# steps:
-#   - name: build
-#     image: debian
-#     commands:
-#       - touch myfile
-#   - name: a-test-step
-#     image: debian
-#     commands:
-#       - cat myfile
-
-#     variables:
-#   - &USERNAME some_global_secret_1
-#   - &TOKEN some_global_secret_2
-
-# steps:
-
-#   use-as-list:
-#     image: busybox
-#     commands:
-#       - echo $USERNAME
-#       - echo $TOKEN
-#     secrets:
-#       - *USERNAME
-#       - *TOKEN
-
-#   use-as-scalar:
-#     image: woodpeckerci/plugin-docker-buildx
-#     settings:
-#       dockerfile: Dockerfile
-#       registry: ${CI_FORGE_URL##https://}
-#       username: ${CI_REPO_OWNER}
-#       password:
-#         from_secret: *TOKEN
-#       repo: ${CI_FORGE_URL##https://}/${CI_REPO_OWNER}/myrepo
-#       tag: "test"
+      - docker build -t priya20xenonstack/woodpecker-test:latest -f Dockerfile .
+      - docker login -u $docker_username -p $docker_password
+      - docker push priya20xenonstack/woodpecker-test:latest
+    when:
+      event: tag
+    secrets:
+      - 'docker_username'
+      - 'docker_password'
