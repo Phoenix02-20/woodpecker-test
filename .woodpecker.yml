@@ -19,15 +19,19 @@
 platform: 'linux/amd64'
 branches: 'main'
 
-pipeline:
- build:
-    image: 'docker:19.03.12'
-    commands:
-      - docker build -t priya20xenonstack/woodpecker-test:latest -f Dockerfile .
-      - docker login -u $docker_username -p $docker_password
-      - docker push priya20xenonstack/woodpecker-test:latest
-    when:
-      event: tag
-    secrets:
-      - 'docker_username'
-      - 'docker_password'
+stages:
+ - build
+
+build:
+ stage: build
+ image: 'docker:19.03.12'
+ commands:
+    - docker build -t priya20xenonstack/woodpecker-test:latest -f Dockerfile .
+    - docker login -u $docker_username -p $docker_password
+    - docker push priya20xenonstack/woodpecker-test:latest
+ when:
+    event: tag
+ secrets:
+    - 'docker_username'
+    - 'docker_password'
+
